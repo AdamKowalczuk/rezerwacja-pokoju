@@ -1,6 +1,6 @@
-export const changeForm = (form:Array<string>) => {
+export const addUser = (newUser:any) => {
     return {
-      type: "CHANGE_FORM",
-      payload: form,
+      type: "ADD_USER",
+      newUser: newUser,
     };
   };

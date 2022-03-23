@@ -1,7 +1,9 @@
 import { combineReducers } from "redux";
 
-import form from "./form";
+import users from "./users";
 
 export const reducers = combineReducers({
-  form
+  users
 });
+
+

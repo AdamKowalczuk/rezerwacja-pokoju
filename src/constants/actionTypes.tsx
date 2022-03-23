@@ -1,1 +1,1 @@
-export const CHANGE_FORM = "CHANGE_FORM";
+export const ADD_USER = "ADD_USER";
