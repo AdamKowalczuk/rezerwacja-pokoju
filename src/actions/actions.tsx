@@ -4,3 +4,11 @@ export const addUser = (newUser:any) => {
       newUser: newUser,
     };
   };
+
+  export const changeActualRoom = (actualRoom:Number) => {
+    return {
+      type: "CHANGE_ACTUAL_ROOM",
+      actualRoom:actualRoom
+    };
+  };
+

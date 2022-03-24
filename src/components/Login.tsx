@@ -54,7 +54,6 @@ const Login = () => {
               <button
                 className="login-button"
                 onClick={() => {
-                  // dispatch(checkUser(inputs.email,inputs.password))
                   checkUser(inputs.email, inputs.password);
                 }}
               >

@@ -1,29 +1,35 @@
 import React, { useState } from "react";
 import Bed from "../icons/bed.svg";
-import Room from '../icons/room.png'
+import Room from "../icons/room.png";
 import Minus from "../icons/minus.svg";
 import Star from "../icons/star.svg";
 import EmptyStar from "../icons/empty-star.svg";
-import Marker from '../icons/marker.svg'
+import Marker from "../icons/marker.svg";
 import User from "../icons/user.svg";
-import { Checkbox } from '@mui/material';
+import { Checkbox } from "@mui/material";
 import Check from "../icons/check.svg";
 import { Link, useHistory } from "react-router-dom";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import "../styles/main.scss";
+import DatePicker from "react-date-picker";
 
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 const Main = () => {
   const dispatch = useDispatch();
+  const rooms = useSelector((state: RootStateOrAny) => {
+    return state.rooms;
+  });
   const [inputs, setInputs] = useState({
     destination: "",
-    arrival: "",
-    departure: "",
+    // arrival: new Date(),
+    // departure: new Date(),
     numberOfPeople: "",
     minimalPrice: "",
     maximumPrice: "",
     numberOfStars: "",
   });
+  const [arrival, changeArrival] = useState(new Date());
+  const [departure, changeDeparture] = useState(new Date());
+
   const handleChange = (event: any) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -31,6 +37,15 @@ const Main = () => {
   };
   const handleSubmit = (event: any) => {
     event.preventDefault();
+  };
+  const displayStars = (number: Number) => {
+    let displayArray = [];
+    for (let i = 0; i < number; i++) {
+      displayArray.push(1);
+    }
+    return displayArray.map((item) => {
+      return <img src={Star} alt="" />;
+    });
   };
   return (
     <>
@@ -55,8 +70,10 @@ const Main = () => {
           type="text"
         />
         <div className="options">
-          <input type="date" name="arrival" placeholder="Przyjazd" />
-          <input type="date" name="departure" placeholder="Wyjazd" />
+          {/* <input type="date" name="arrival" placeholder="Przyjazd" />
+          <input type="date" name="departure" placeholder="Wyjazd" /> */}
+          <DatePicker onChange={changeArrival} value={arrival} />
+          <DatePicker onChange={changeDeparture} value={departure} />
           <div className="number-of-peoples convex">
             <img src={User} alt="user" />
             <h3>Liczba osób</h3>
@@ -67,34 +84,29 @@ const Main = () => {
           <button id="search">Szukaj</button>
         </div>
         <div className="filters convex">
-          <h2>Zakres cen</h2>
-          <hr />
+          <h3 style={{ textAlign: "center" }}>Zakres cen</h3>
+
           <div className="price-container">
             <div className="left">
               <p>min.(zł)</p>
-              <div className="convex">120</div>
+              <input name="minimalPrice" value={inputs.minimalPrice} onChange={handleChange} className="convex" type="text" />
+
+              {/* <div className="convex">120</div> */}
             </div>
             <div className="middle">
               <img src={Minus} alt="minus" />
             </div>
             <div className="right">
               <p>max.(zł)</p>
-              <div className="convex">340</div>
+              {/* <input className="convex" type="text" /> */}
+              <input name="maximumPrice" value={inputs.maximumPrice} onChange={handleChange} className="convex" type="text" />
+              {/* <div className="convex">340</div> */}
             </div>
           </div>
           <hr />
           <h2>Liczba gwiazdek</h2>
           <div className="stars-row">
-          <Checkbox
-        {...label}
-        defaultChecked
-        sx={{
-          color: 'red',
-          '&.Mui-checked': {
-            color: 'red',
-          },
-        }}
-      />
+            <input type="checkbox" name="" />
             <img src={Star} alt="star" />
             <img src={Star} alt="star" />
             <img src={EmptyStar} alt="star" />
@@ -141,16 +153,29 @@ const Main = () => {
             <img src={Star} alt="star" />
             <img src={Star} alt="star" />
           </div>
-
-          <button>Wyczyść filtry</button>
-          <button>Filtruj</button>
+          <div className="filter-buttons center">
+            <button className="reset-button">Wyczyść filtry</button>
+            <button className="filter-button">Filtruj</button>
+          </div>
         </div>
         <div className="rooms">
-          <div className="room convex"><img src={Room} alt="room" /><h2>Apartament EMILII PLATER - Centrum</h2> <img src={Star} alt="" /><img src={Star} alt="" /> <h3>200zł</h3>
-          <img src={Marker} alt="marker" /><h4>Warszawa</h4>
-          <p>Luksusowy, dwupokojowy apartament dla 4 osób, w pobliżu Dworca Centralnego, Złotych Tarasów i Ronda ONZ. W samym centrum Warszawy. </p>
-          <button>Zobacz ofertę</button></div>
+          {rooms.map((room: any) => {
+            return (
+              <div className="room convex">
+                <img src={room.image} alt="room" />
+                <h2>{room.name}</h2>
+                {displayStars(room.numberOfStars)}
+                {/* <img src={Star} alt="" />
+            <img src={Star} alt="" /> */}
 
+                <h3>{room.price}zł</h3>
+                <img src={Marker} alt="marker" />
+                <h4>{room.location}</h4>
+                <p>{room.description}</p>
+                <button>Zobacz ofertę</button>
+              </div>
+            );
+          })}
         </div>
       </div>
       <footer>© 2022 aplikacja-do-rezerwacji.pl</footer>

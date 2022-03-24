@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
-// import { reducers } from "./reducers";
 import { reducers } from "./reducers";
 function saveToLocalStorage(state:any) {
   try {
