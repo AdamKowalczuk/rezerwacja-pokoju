@@ -3,9 +3,9 @@ import Bed from "../icons/bed.svg";
 import "../styles/details.scss";
 import Marker from "../icons/marker.svg";
 import User from "../icons/user.svg";
-import Room from "../icons/room.png";
-import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
-import { changeActualRoom } from "../actions/actions";
+// import Room from "../icons/room.png";
+import { RootStateOrAny, useSelector} from "react-redux";
+// import { changeActualRoom } from "../actions/actions";
 
 const Details = () => {
   const [actualPhoto, setActualPhoto] = useState(0);

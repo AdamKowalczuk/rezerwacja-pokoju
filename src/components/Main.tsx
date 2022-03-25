@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import Bed from "../icons/bed.svg";
-import Room from "../icons/room.png";
+// import Room from "../icons/room.png";
 import Plus from "../icons/plus.svg";
 import Minus from "../icons/minus.svg";
 import Star from "../icons/star.svg";
 import EmptyStar from "../icons/empty-star.svg";
 import Marker from "../icons/marker.svg";
 import User from "../icons/user.svg";
-import { Checkbox } from "@mui/material";
+// import { Checkbox } from "@mui/material";
 import { addRoom } from "../actions/actions";
-import Check from "../icons/check.svg";
+// import Check from "../icons/check.svg";
 import Cross from "../icons/cross.svg";
 import "../styles/modal.scss";
-import { Link, useHistory } from "react-router-dom";
+// import { Link, useHistory } from "react-router-dom";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import Modal from "react-modal";
 import "../styles/main.scss";
@@ -62,9 +62,9 @@ const Main = () => {
     const value = event.target.value;
     setModalInputs((values) => ({ ...values, [name]: value }));
   };
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
-  };
+  // const handleSubmit = (event: any) => {
+  //   event.preventDefault();
+  // };
   const displayStars = (number: Number) => {
     let displayArray = [];
     for (let i = 0; i < number; i++) {
