@@ -12,3 +12,10 @@ export const addUser = (newUser:any) => {
     };
   };
 
+  export const addRoom = (newRoom:any) => {
+    return {
+      type: "ADD_ROOM",
+      newRoom:newRoom
+    };
+  };
+

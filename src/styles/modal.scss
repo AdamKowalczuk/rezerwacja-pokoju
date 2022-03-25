@@ -1,0 +1,89 @@
+$blue: #58cbe0;
+$gray: #5b6277;
+
+.ReactModal__Overlay,
+.ReactModal__Overlay--after-open {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40vw;
+    position: relative;
+    padding: 10px;
+    h2 {
+      display: inline-block;
+      color: $gray;
+    }
+    img {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+    form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      textarea {
+        width: 80%;
+        height: 100px;
+        padding: 10px;
+        border: 0;
+      }
+      input {
+        width: 80%;
+        margin: 10px;
+      }
+      button {
+        background-color: $blue;
+        color: #fff;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .ReactModal__Overlay,
+  .ReactModal__Overlay--after-open {
+    .modal {
+      width: 100vw;
+      height: 100vh;
+      padding: 10px;
+      img {
+        top: 20px;
+        right: 20px;
+      }
+      form {
+        width: 70%;
+        textarea {
+          width: 100%;
+          height: 80px;
+          padding: 10px;
+          border: 0;
+        }
+        input {
+          width: 100%;
+          margin: 10px;
+        }
+        label {
+          text-align: left;
+          width: 100%;
+          color: $gray;
+          margin-bottom: 0;
+          margin-top: 10px;
+        }
+        button {
+          margin-top: 20px;
+          width: 70vw;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+}

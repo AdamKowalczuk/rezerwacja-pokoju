@@ -20,7 +20,7 @@ let rooms2 = [
         numberOfStars:3,
         price:250,
         numberOfPeople:2,
-        images:["https://cf.bstatic.com/xdata/images/hotel/max1024x768/194702399.jpg?k=14e9a332f4f20a67f72f8d5938cd6577f5c932a0653f59ae89d020f119f0d9be&o=&hp=1","https://cf.bstatic.com/xdata/images/hotel/max1024x768/194702399.jpg?k=14e9a332f4f20a67f72f8d5938cd6577f5c932a0653f59ae89d020f119f0d9be&o=&hp=1","https://cdn.pixabay.com/photo/2019/12/16/15/43/room-4699578_1280.jpg","https://cdn.pixabay.com/photo/2019/12/16/15/43/room-4699578_1280.jpg"],
+        image:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/194702399.jpg?k=14e9a332f4f20a67f72f8d5938cd6577f5c932a0653f59ae89d020f119f0d9be&o=&hp=1",
         id:0
     },
     {
@@ -30,7 +30,7 @@ let rooms2 = [
         numberOfStars:1,
         price:250,
         numberOfPeople:2,
-        images:['../icons/room.png'],
+        image:'https://cf.bstatic.com/xdata/images/hotel/max1024x768/194702399.jpg?k=14e9a332f4f20a67f72f8d5938cd6577f5c932a0653f59ae89d020f119f0d9be&o=&hp=1',
         id:1
     },
     {
@@ -40,7 +40,7 @@ let rooms2 = [
         numberOfStars:2,
         price:250,
         numberOfPeople:2,
-        images:['../icons/room.png'],
+        image:"https://grupamo.pl/wp-content/uploads/2019/06/AM-THE-ROOM-1.jpg",
         id:2
     },
     {
@@ -50,7 +50,7 @@ let rooms2 = [
         numberOfStars:3,
         price:250,
         numberOfPeople:2,
-        images:['../icons/room.png'],
+        image:'https://cf.bstatic.com/xdata/images/hotel/max1024x768/194702399.jpg?k=14e9a332f4f20a67f72f8d5938cd6577f5c932a0653f59ae89d020f119f0d9be&o=&hp=1',
         id:3
     },
 
