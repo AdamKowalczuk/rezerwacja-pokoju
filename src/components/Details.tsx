@@ -22,6 +22,9 @@ const Details = () => {
     return state.actualUser;
   });
   const room = rooms[actualRoom];
+  var difference_in_time = departure.getTime() - arrival.getTime();
+  var difference_in_days = Math.round(difference_in_time / (1000 * 3600 * 24));
+
   let history = useHistory();
   const displayStars = (number: Number) => {
     let displayArray = [];
@@ -36,17 +39,21 @@ const Details = () => {
     history.push("/");
   }
   function booking() {
-    alert("Udało Ci się zarezerwować pokój!");
-    dispatch(
-      addReservation(actualUser, {
-        name: rooms[actualRoom].name,
-        peopleNumber: peopleNumber,
-        price: rooms[actualRoom].price * peopleNumber,
-        arrival: arrival,
-        departure: departure,
-      })
-    );
-    history.push("/main");
+    if (actualUser === -1) {
+      alert("Musisz być zarejestrowany, aby zarezerwować pokój!");
+    } else {
+      alert("Udało Ci się zarezerwować pokój!");
+      dispatch(
+        addReservation(actualUser, {
+          name: rooms[actualRoom].name,
+          peopleNumber: peopleNumber,
+          price: rooms[actualRoom].price * peopleNumber,
+          arrival: arrival,
+          departure: departure,
+        })
+      );
+      history.push("/main");
+    }
   }
   return (
     <>
@@ -104,10 +111,10 @@ const Details = () => {
           </div>
 
           <p className="right">
-            Cena za osobę: <b>{room.price}zł</b>
+            Cena za dobę: <b>{room.price * peopleNumber}zł</b>
           </p>
           <h3 className="right">
-            Cena całkowita: <b>{room.price * peopleNumber}zł</b>
+            Cena całkowita: <b>{room.price * peopleNumber * difference_in_days}zł</b>
           </h3>
           <button className="reserve" onClick={() => booking()}>
             Zarezerwuj

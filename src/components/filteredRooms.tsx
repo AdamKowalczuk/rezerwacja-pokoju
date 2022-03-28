@@ -8,7 +8,7 @@ const displayStars = (number: number) => {
   for (let i = 0; i < number; i++) {
     displayArray.push(1);
   }
-  return displayArray.map((item) => {
+  return displayArray.map(() => {
     return <img src={Star} alt="" />;
   });
 };
@@ -40,6 +40,16 @@ const filteredRooms = (props: any) => {
                   className="edit-button"
                   onClick={() => {
                     props.dispatch(setModalMode("edit"));
+                    props.setModalInputs2({
+                      name: room.name,
+                      location: room.location,
+                      description: room.description,
+                      numberOfStars: room.numberOfStars,
+                      numberOfPeople: room.numberOfPeople,
+                      price: room.price,
+                      image: room.image,
+                    });
+                    props.dispatch(changeActualRoom(id));
                     props.openModal();
                   }}
                 >
@@ -71,6 +81,7 @@ const filteredRooms = (props: any) => {
                 className="edit-button"
                 onClick={() => {
                   props.dispatch(setModalMode("edit"));
+                  props.dispatch(changeActualRoom(id));
                   props.openModal();
                 }}
               >

@@ -44,6 +44,7 @@ const Main = () => {
     minimalPrice: 0,
     maximumPrice: 500,
     numberOfStars: 0,
+    id: rooms.length,
   });
   let [filteredRooms, setFilteredRooms] = useState(rooms);
   const [modalInputs, setModalInputs] = useState({
@@ -147,7 +148,7 @@ const Main = () => {
   }
   function reset() {
     let newFilteredRooms = rooms;
-    setInputs({ destination: "", numberOfPeople: 0, minimalPrice: 0, maximumPrice: 500, numberOfStars: 0 });
+    setInputs({ destination: "", numberOfPeople: 0, minimalPrice: 0, maximumPrice: 500, numberOfStars: 0, id: rooms.length });
     setFilteredRooms(newFilteredRooms);
     resetStars();
     document.getElementsByClassName("star-button")[0].setAttribute("class", "star-button star-button-selected");
@@ -436,7 +437,7 @@ const Main = () => {
           </div>
 
           <div className="rooms">
-            <FilteredRooms filteredRooms={filteredRooms} dispatch={dispatch} openModal={openModal} />
+            <FilteredRooms filteredRooms={filteredRooms} dispatch={dispatch} openModal={openModal} setModalInputs2={setModalInputs2} />
           </div>
         </div>
       ) : (
@@ -451,7 +452,7 @@ const Main = () => {
               type="text"
             />
             <div className="convex">
-              <h3 style={{ textAlign: "center", paddingTop: "20px" }}>Zakres cen</h3>
+              <h3 style={{ textAlign: "center", paddingTop: "10px", margin: "10px 0 0 0" }}>Zakres cen</h3>
               <div className="price-container">
                 <div className="left">
                   <p>min.(zł)</p>
@@ -587,8 +588,7 @@ const Main = () => {
             </div>
           </div>
           <div className="rooms">
-            <FilteredRooms filteredRooms={filteredRooms} dispatch={dispatch} openModal={openModal} />
-
+            <FilteredRooms filteredRooms={filteredRooms} dispatch={dispatch} openModal={openModal} setModalInputs2={setModalInputs2} />
           </div>
         </div>
       )}
