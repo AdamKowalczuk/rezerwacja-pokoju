@@ -13,7 +13,6 @@ $gray: #5b6277;
     height: 0.5625 * 55vw;
     width: 55vw;
   }
-
   .details {
     padding: 20px;
     .row {
@@ -27,7 +26,6 @@ $gray: #5b6277;
         margin-left: 10px;
       }
     }
-
     .right {
       text-align: right;
       font-weight: 400;
@@ -38,7 +36,6 @@ $gray: #5b6277;
       color: #fff;
       border-radius: 10px;
       padding: 10px 30px;
-      //   width: 100%;
     }
     .date {
       display: flex;
@@ -50,7 +47,6 @@ $gray: #5b6277;
     .counter {
       display: flex;
       align-items: center;
-      // justify-content: center;
       h3 {
         width: 120px;
       }
@@ -65,15 +61,12 @@ $gray: #5b6277;
     }
     .marker {
       display: flex;
-      //   justify-content: center;
       align-items: center;
       margin-top: 10px;
       img {
         width: 25px;
       }
       h4 {
-        // display: inline-block;
-
         margin: 0;
         margin-left: 5px;
       }
@@ -88,7 +81,6 @@ $gray: #5b6277;
       width: 100%;
       height: auto;
     }
-
     .details {
       padding: 10px;
       .row {

@@ -1,9 +1,6 @@
-import { SET_MODAL_MODE} from "../constants/actionTypes";
+import { SET_MODAL_MODE } from "../constants/actionTypes";
 
-
-
-const modalMode= (modalMode:String = '', action:any) => {
-
+const modalMode = (modalMode: String = "", action: any) => {
   switch (action.type) {
     case SET_MODAL_MODE:
       return action.modalMode;

@@ -4,7 +4,7 @@ import Plus from "../icons/plus.svg";
 import Minus from "../icons/minus.svg";
 import Star from "../icons/star.svg";
 import EmptyStar from "../icons/empty-star.svg";
-import { addRoom ,setModalMode,editRoom} from "../actions/actions";
+import { addRoom, setModalMode, editRoom } from "../actions/actions";
 import Cross from "../icons/cross.svg";
 import "../styles/modal.scss";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
@@ -14,6 +14,17 @@ import { useHistory } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import FilteredRooms from "./filteredRooms";
 Modal.setAppElement("#root");
+
+interface IRoom {
+  name: String;
+  description: String;
+  location: String;
+  price: Number;
+  numberOfPeople: Number;
+  numberOfStars: Number;
+  image: String;
+  id: Number;
+}
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -66,6 +77,7 @@ const Main = () => {
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
+
   const handleChangeModal = (event: any) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -80,10 +92,10 @@ const Main = () => {
   function logout() {
     history.push("/");
   }
-  function setNumberOfStars(number: any) {
+  function setNumberOfStars(number: number) {
     setInputs({ ...inputs, numberOfStars: number });
   }
-  function setNumberOfPeople(number: any) {
+  function setNumberOfPeople(number: number) {
     if (number < 0 || number > 10) {
     } else {
       setInputs({ ...inputs, numberOfPeople: number });
@@ -98,7 +110,6 @@ const Main = () => {
     if (inputs.maximumPrice > 0) {
       newFilteredRooms = newFilteredRooms.filter(filterByPrice);
     }
-    console.log(inputs.destination.length);
 
     if (inputs.destination.length > 0) {
       newFilteredRooms = newFilteredRooms.filter(filterByName);
@@ -109,16 +120,16 @@ const Main = () => {
     setFilteredRooms(newFilteredRooms);
   }
 
-  function filterByName(room: any) {
+  function filterByName(room: IRoom) {
     return room.location.includes(inputs.destination);
   }
-  function filterByNumberOfPerson(room: any) {
-    return room.numberOfPeople === inputs.numberOfPeople;
+  function filterByNumberOfPerson(room: IRoom) {
+    return room.numberOfPeople >= inputs.numberOfPeople;
   }
-  function filterByStars(room: any) {
+  function filterByStars(room: IRoom) {
     return room.numberOfStars >= inputs.numberOfStars;
   }
-  function filterByPrice(room: any) {
+  function filterByPrice(room: IRoom) {
     return room.price >= inputs.minimalPrice && room.price <= inputs.maximumPrice;
   }
   function resetStars() {
@@ -130,127 +141,132 @@ const Main = () => {
     document.getElementsByClassName("star-button")[5].setAttribute("class", "star-button");
   }
 
-  function selectStarsNumber(id: any) {
+  function selectStarsNumber(id: number) {
     resetStars();
     document.getElementsByClassName("star-button")[id].setAttribute("class", "star-button star-button-selected");
   }
   function reset() {
     let newFilteredRooms = rooms;
-    setInputs({ ...inputs, minimalPrice: 0 });
-    setInputs({ ...inputs, maximumPrice: 500 });
+    setInputs({ destination: "", numberOfPeople: 0, minimalPrice: 0, maximumPrice: 500, numberOfStars: 0 });
     setFilteredRooms(newFilteredRooms);
     resetStars();
+    document.getElementsByClassName("star-button")[0].setAttribute("class", "star-button star-button-selected");
   }
   const handleSubmit = (event: any) => {
     event.preventDefault();
     closeModal();
   };
+
   return (
     <>
       <nav>
-        {modalMode==="add" ? <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal convex">
-          <img src={Cross} alt="cross" className="cross" onClick={closeModal} />
-          <h2>Dodaj pokój</h2>
-          <form onSubmit={handleSubmit}>
-            <input type="text" value={modalInputs.name} name="name" onChange={handleChangeModal} placeholder="Nazwa pokoju" className="concave" />
-            <input
-              type="text"
-              value={modalInputs.location}
-              name="location"
-              onChange={handleChangeModal}
-              placeholder="Lokalizacja"
-              className="concave"
-            />
-            <textarea
-              name="description"
-              value={modalInputs.description}
-              onChange={handleChangeModal}
-              id=""
-              placeholder="Opis"
-              className="concave"
-            ></textarea>
-            <label htmlFor="price">Cena:</label>
-            <input type="number" value={modalInputs.price} onChange={handleChangeModal} name="price" className="concave" />
-            <label htmlFor="numberOfStars">Liczba gwiazdek:</label>
-            <input
-              type="number"
-              value={modalInputs.numberOfStars}
-              min="0"
-              max="5"
-              onChange={handleChangeModal}
-              name="numberOfStars"
-              className="concave"
-            />
-            <label htmlFor="numberOfPeople">Liczba osób:</label>
-            <input type="number" value={modalInputs.numberOfPeople} onChange={handleChangeModal} name="numberOfPeople" className="concave" />
-            <input
-              type="text"
-              value={modalInputs.image}
-              onChange={handleChangeModal}
-              name="image"
-              placeholder="Podaj adres URL do zdjęcia"
-              className="concave"
-            />
-            <button
-              onClick={() => {
-                dispatch(addRoom(modalInputs));
-              }}
-            >
-              Dodaj
-            </button>
-          </form>
-        </Modal> : <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal convex">
-          <img src={Cross} alt="cross" className="cross" onClick={closeModal} />
-          <h2>Edytuj pokój pokój</h2>
-          <form onSubmit={handleSubmit}>
-            <input type="text" value={modalInputs2.name} name="name" onChange={handleChangeModal2} placeholder="Nazwa pokoju" className="concave" />
-            <input
-              type="text"
-              value={modalInputs2.location}
-              name="location"
-              onChange={handleChangeModal2}
-              placeholder="Lokalizacja"
-              className="concave"
-            />
-            <textarea
-              name="description"
-              value={modalInputs2.description}
-              onChange={handleChangeModal2}
-              id=""
-              placeholder="Opis"
-              className="concave"
-            ></textarea>
-            <label htmlFor="price">Cena:</label>
-            <input type="number" value={modalInputs2.price} onChange={handleChangeModal2} name="price" className="concave" />
-            <label htmlFor="numberOfStars">Liczba gwiazdek:</label>
-            <input
-              type="number"
-              value={modalInputs2.numberOfStars}
-              min="0"
-              max="5"
-              onChange={handleChangeModal2}
-              name="numberOfStars"
-              className="concave"
-            />
-            <label htmlFor="numberOfPeople">Liczba osób:</label>
-            <input type="number" value={modalInputs2.numberOfPeople} onChange={handleChangeModal2} name="numberOfPeople" className="concave" />
-            <input
-              type="text"
-              value={modalInputs2.image}
-              onChange={handleChangeModal2}
-              name="image"
-              placeholder="Podaj adres URL do zdjęcia"
-              className="concave"
-            />
-            <button
-              onClick={() => {
-                dispatch(editRoom(modalInputs2,actualRoom));
-              }}
-            >
-              Edytuj
-            </button>
-          </form>
-        </Modal>}
+        {modalMode === "add" ? (
+          <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal convex">
+            <img src={Cross} alt="cross" className="cross" onClick={closeModal} />
+            <h2>Dodaj pokój</h2>
+            <form onSubmit={handleSubmit}>
+              <input type="text" value={modalInputs.name} name="name" onChange={handleChangeModal} placeholder="Nazwa pokoju" className="concave" />
+              <input
+                type="text"
+                value={modalInputs.location}
+                name="location"
+                onChange={handleChangeModal}
+                placeholder="Lokalizacja"
+                className="concave"
+              />
+              <textarea
+                name="description"
+                value={modalInputs.description}
+                onChange={handleChangeModal}
+                id=""
+                placeholder="Opis"
+                className="concave"
+              ></textarea>
+              <label htmlFor="price">Cena:</label>
+              <input type="number" value={modalInputs.price} onChange={handleChangeModal} name="price" className="concave" />
+              <label htmlFor="numberOfStars">Liczba gwiazdek:</label>
+              <input
+                type="number"
+                value={modalInputs.numberOfStars}
+                min="0"
+                max="5"
+                onChange={handleChangeModal}
+                name="numberOfStars"
+                className="concave"
+              />
+              <label htmlFor="numberOfPeople">Liczba osób:</label>
+              <input type="number" value={modalInputs.numberOfPeople} onChange={handleChangeModal} name="numberOfPeople" className="concave" />
+              <input
+                type="text"
+                value={modalInputs.image}
+                onChange={handleChangeModal}
+                name="image"
+                placeholder="Podaj adres URL do zdjęcia"
+                className="concave"
+              />
+              <button
+                onClick={() => {
+                  dispatch(addRoom(modalInputs));
+                }}
+              >
+                Dodaj
+              </button>
+            </form>
+          </Modal>
+        ) : (
+          <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal convex">
+            <img src={Cross} alt="cross" className="cross" onClick={closeModal} />
+            <h2>Edytuj pokój pokój</h2>
+            <form onSubmit={handleSubmit}>
+              <input type="text" value={modalInputs2.name} name="name" onChange={handleChangeModal2} placeholder="Nazwa pokoju" className="concave" />
+              <input
+                type="text"
+                value={modalInputs2.location}
+                name="location"
+                onChange={handleChangeModal2}
+                placeholder="Lokalizacja"
+                className="concave"
+              />
+              <textarea
+                name="description"
+                value={modalInputs2.description}
+                onChange={handleChangeModal2}
+                id=""
+                placeholder="Opis"
+                className="concave"
+              ></textarea>
+              <label htmlFor="price">Cena:</label>
+              <input type="number" value={modalInputs2.price} onChange={handleChangeModal2} name="price" className="concave" />
+              <label htmlFor="numberOfStars">Liczba gwiazdek:</label>
+              <input
+                type="number"
+                value={modalInputs2.numberOfStars}
+                min="0"
+                max="5"
+                onChange={handleChangeModal2}
+                name="numberOfStars"
+                className="concave"
+              />
+              <label htmlFor="numberOfPeople">Liczba osób:</label>
+              <input type="number" value={modalInputs2.numberOfPeople} onChange={handleChangeModal2} name="numberOfPeople" className="concave" />
+              <input
+                type="text"
+                value={modalInputs2.image}
+                onChange={handleChangeModal2}
+                name="image"
+                placeholder="Podaj adres URL do zdjęcia"
+                className="concave"
+              />
+              <button
+                onClick={() => {
+                  dispatch(editRoom(modalInputs2, actualRoom));
+                }}
+              >
+                Edytuj
+              </button>
+            </form>
+          </Modal>
+        )}
 
         <div className="logo">
           <img src={Bed} alt="bed" />
@@ -258,8 +274,17 @@ const Main = () => {
         </div>
 
         <div className="user-panel">
-          <button onClick={() => {dispatch(setModalMode('add'));openModal()}}><h3>Dodaj obiekt</h3></button>
-          <button onClick={() =>  logout()}><h3>Wyloguj się</h3></button>
+          <button
+            onClick={() => {
+              dispatch(setModalMode("add"));
+              openModal();
+            }}
+          >
+            <h3>Dodaj obiekt</h3>
+          </button>
+          <button onClick={() => logout()}>
+            <h3>Wyloguj się</h3>
+          </button>
         </div>
       </nav>
       {window.innerWidth > 1000 ? (
@@ -274,12 +299,11 @@ const Main = () => {
               type="text"
             />
             <div className="convex">
-              <h3 style={{ textAlign: "center",paddingTop:"20px"}}>Zakres cen</h3>
+              <h3 style={{ textAlign: "center", paddingTop: "20px" }}>Zakres cen</h3>
               <div className="price-container">
                 <div className="left">
                   <p>min.(zł)</p>
                   <input name="minimalPrice" value={inputs.minimalPrice} onChange={handleChange} className="convex" type="text" />
-
                 </div>
                 <div className="middle">
                   <img src={Minus} alt="minus" />
@@ -287,12 +311,11 @@ const Main = () => {
                 <div className="right">
                   <p>max.(zł)</p>
                   <input name="maximumPrice" value={inputs.maximumPrice} onChange={handleChange} className="convex" type="text" />
-
                 </div>
               </div>
               <hr />
               <div className="number-of-peoples">
-              <h3>Liczba osób</h3>
+                <h3>Liczba osób</h3>
 
                 <div className="counter">
                   <div className="convex plus" onClick={() => setNumberOfPeople(inputs.numberOfPeople + 1)}>
@@ -306,7 +329,7 @@ const Main = () => {
                 </div>
               </div>
               <hr />
-              <h3 style={{textAlign:'center'}}>Liczba gwiazdek</h3>
+              <h3 style={{ textAlign: "center" }}>Liczba gwiazdek</h3>
               <div className="stars-row">
                 <button
                   className="star-button star-button-selected"
@@ -413,13 +436,12 @@ const Main = () => {
           </div>
 
           <div className="rooms">
-            <FilteredRooms  filteredRooms={filteredRooms} dispatch={dispatch} openModal={openModal} />
+            <FilteredRooms filteredRooms={filteredRooms} dispatch={dispatch} openModal={openModal} />
           </div>
         </div>
       ) : (
         <div className="main-container">
-
-<div className="filters">
+          <div className="filters">
             <input
               className="searchbar convex"
               name="destination"
@@ -429,12 +451,11 @@ const Main = () => {
               type="text"
             />
             <div className="convex">
-              <h3 style={{ textAlign: "center",paddingTop:"20px"}}>Zakres cen</h3>
+              <h3 style={{ textAlign: "center", paddingTop: "20px" }}>Zakres cen</h3>
               <div className="price-container">
                 <div className="left">
                   <p>min.(zł)</p>
                   <input name="minimalPrice" value={inputs.minimalPrice} onChange={handleChange} className="convex" type="text" />
-
                 </div>
                 <div className="middle">
                   <img src={Minus} alt="minus" />
@@ -442,12 +463,11 @@ const Main = () => {
                 <div className="right">
                   <p>max.(zł)</p>
                   <input name="maximumPrice" value={inputs.maximumPrice} onChange={handleChange} className="convex" type="text" />
-
                 </div>
               </div>
               <hr />
               <div className="number-of-peoples">
-              <h3>Liczba osób</h3>
+                <h3>Liczba osób</h3>
 
                 <div className="counter">
                   <div className="convex plus" onClick={() => setNumberOfPeople(inputs.numberOfPeople + 1)}>
@@ -461,7 +481,7 @@ const Main = () => {
                 </div>
               </div>
               <hr />
-              <h3 style={{textAlign:'center'}}>Liczba gwiazdek</h3>
+              <h3 style={{ textAlign: "center" }}>Liczba gwiazdek</h3>
               <div className="stars-row">
                 <button
                   className="star-button star-button-selected"
@@ -567,28 +587,8 @@ const Main = () => {
             </div>
           </div>
           <div className="rooms">
-          <FilteredRooms  filteredRooms={filteredRooms} dispatch={dispatch} openModal={openModal} />
-            {/* {rooms.map((room: any) => {
-              return (
-                <div className="room convex">
-                  <div className="room-top">
-                    <img src={room.image} className="room-image" alt="room" />
-                    <div className="room-right">
-                      <h3>{room.name}</h3>
-                      <div className="location">
-                        <img src={Marker} alt="marker" />
-                        <h4>{room.location}</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <p>{room.description}</p>
-                  <div className="room-down">
-                    <h3>{room.price}zł</h3>
-                    <button>Zobacz ofertę</button>
-                  </div>
-                </div>
-              );
-            })} */}
+            <FilteredRooms filteredRooms={filteredRooms} dispatch={dispatch} openModal={openModal} />
+
           </div>
         </div>
       )}

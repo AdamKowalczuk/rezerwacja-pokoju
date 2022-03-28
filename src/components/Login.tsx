@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../styles/login.scss";
-import {  useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { addUser, changeActualUser } from "../actions/actions";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 const Login = () => {
@@ -10,7 +10,8 @@ const Login = () => {
   let users = useSelector((state: RootStateOrAny) => {
     return state.users;
   });
-  const [inputs, setInputs] = useState({ name: "", subname: "", email: "", password: "", repeatPassword: "",reservations:[] });
+  const validEmail = new RegExp("^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$");
+  const [inputs, setInputs] = useState({ name: "", subname: "", email: "", password: "", repeatPassword: "", reservations: [] });
   const handleChange = (event: any) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -46,7 +47,6 @@ const Login = () => {
     event.preventDefault();
   };
 
-  const validEmail = new RegExp("^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$");
   return (
     <>
       <div className="login-container">

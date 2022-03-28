@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Bed from "../icons/bed.svg";
 import "../styles/details.scss";
 import Marker from "../icons/marker.svg";
 import Star from "../icons/star.svg";
 import { useHistory } from "react-router-dom";
-import { RootStateOrAny, useSelector,useDispatch } from "react-redux";
+import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import { addReservation } from "../actions/actions";
 import DatePicker from "react-datepicker";
 const Details = () => {
@@ -28,16 +28,24 @@ const Details = () => {
     for (let i = 0; i < number; i++) {
       displayArray.push(1);
     }
-    return displayArray.map((item) => {
+    return displayArray.map(() => {
       return <img src={Star} alt="" />;
     });
   };
   function logout() {
     history.push("/");
   }
-  function booking(){
-    alert("Udało Ci się zarezerwować pokój!")
-    dispatch(addReservation(actualUser,{name:rooms[actualRoom].name,peopleNumber:peopleNumber,price:rooms[actualRoom].price*peopleNumber,arrival:arrival,departure:departure}));
+  function booking() {
+    alert("Udało Ci się zarezerwować pokój!");
+    dispatch(
+      addReservation(actualUser, {
+        name: rooms[actualRoom].name,
+        peopleNumber: peopleNumber,
+        price: rooms[actualRoom].price * peopleNumber,
+        arrival: arrival,
+        departure: departure,
+      })
+    );
     history.push("/main");
   }
   return (
@@ -48,7 +56,9 @@ const Details = () => {
           <h1>Noclegi</h1>
         </div>
         <div className="user-panel">
-          <button onClick={() =>  logout()}><h3>Wyloguj się</h3></button>
+          <button onClick={() => logout()}>
+            <h3>Wyloguj się</h3>
+          </button>
         </div>
       </nav>
       <div className="details-container">
@@ -79,18 +89,18 @@ const Details = () => {
             <h4>{peopleNumber}</h4>
             <div
               className="convex minus"
-              onClick={peopleNumber===0 ? ()=>setPeopleNumber(peopleNumber) :()=>setPeopleNumber(peopleNumber - 1)}
+              onClick={peopleNumber === 0 ? () => setPeopleNumber(peopleNumber) : () => setPeopleNumber(peopleNumber - 1)}
             >
               -
             </div>
           </div>
           <div className="date">
             <h3>Przyjazd</h3>
-            <DatePicker className="convex arrival" selected={arrival} onChange={(date: any) => setArrival(date)} />
+            <DatePicker className="convex arrival" selected={arrival} onChange={(date: Date) => setArrival(date)} />
           </div>
           <div className="date">
             <h3>Odjazd</h3>
-            <DatePicker className="convex departure" selected={departure} onChange={(date: any) => setDeparture(date)} />
+            <DatePicker className="convex departure" selected={departure} onChange={(date: Date) => setDeparture(date)} />
           </div>
 
           <p className="right">
@@ -99,7 +109,9 @@ const Details = () => {
           <h3 className="right">
             Cena całkowita: <b>{room.price * peopleNumber}zł</b>
           </h3>
-          <button className="reserve" onClick={()=>booking()}>Zarezerwuj</button>
+          <button className="reserve" onClick={() => booking()}>
+            Zarezerwuj
+          </button>
         </div>
       </div>
     </>

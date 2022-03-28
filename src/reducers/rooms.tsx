@@ -1,12 +1,14 @@
-import { ADD_ROOM ,EDIT_ROOM} from "../constants/actionTypes";
+import { ADD_ROOM, EDIT_ROOM } from "../constants/actionTypes";
 
 interface IRooms {
-  name: string;
-  description: string;
-  location: string;
-  numberOfStars: Number;
+  name: String;
+  description: String;
+  location: String;
   price: Number;
   numberOfPeople: Number;
+  numberOfStars: Number;
+  image: String;
+  id: Number;
 }
 
 let rooms2 = [
@@ -85,7 +87,7 @@ const rooms = (rooms: Array<IRooms> = rooms2, action: any) => {
       newRoom.push(action.newRoom);
       return newRoom;
     case EDIT_ROOM:
-      newRoom[action.roomID]=action.editedRoom;
+      newRoom[action.roomID] = action.editedRoom;
       return newRoom;
     default:
       return rooms;

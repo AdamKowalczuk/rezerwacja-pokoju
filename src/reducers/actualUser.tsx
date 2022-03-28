@@ -1,8 +1,8 @@
-import { CHANGE_ACTUAL_USER} from "../constants/actionTypes";
+import { CHANGE_ACTUAL_USER } from "../constants/actionTypes";
 
 
 
-const actualUser= (actualUser:Number = 0, action:any) => {
+const actualUser = (actualUser: Number = 0, action: any) => {
 
   switch (action.type) {
     case CHANGE_ACTUAL_USER:

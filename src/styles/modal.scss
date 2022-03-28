@@ -14,6 +14,9 @@ $gray: #5b6277;
     width: 40vw;
     position: relative;
     padding: 10px;
+    .cross {
+      cursor: pointer;
+    }
     h2 {
       display: inline-block;
       color: $gray;
@@ -23,11 +26,15 @@ $gray: #5b6277;
       right: 10px;
       top: 10px;
     }
+    label {
+      margin-top: 10px;
+    }
     form {
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      width: 80%;
       textarea {
         width: 80%;
         height: 100px;
@@ -83,7 +90,4 @@ $gray: #5b6277;
       }
     }
   }
-}
-
-@media only screen and (min-width: 1000px) {
 }
