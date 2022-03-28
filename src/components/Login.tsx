@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../styles/login.scss";
-import { Link,useHistory } from "react-router-dom";
-import { addUser } from "../actions/actions";
+import { Link, useHistory } from "react-router-dom";
+import { addUser, changeActualUser } from "../actions/actions";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 const Login = () => {
   const [isHaveAccount, setIsHaveAccount] = useState(false);
@@ -10,39 +10,52 @@ const Login = () => {
   let users = useSelector((state: RootStateOrAny) => {
     return state.users;
   });
-  const [inputs, setInputs] = useState({ name: "", subname: "", email: "", password: "", repeatPassword: "" });
+  const [inputs, setInputs] = useState({ name: "", subname: "", email: "", password: "", repeatPassword: "",reservations:[] });
   const handleChange = (event: any) => {
     const name = event.target.name;
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
   function checkUser(email: string, password: string) {
-    let isValid=false;
-    users.map((user: any) => {
+    let isValid = false;
+    users.map((user: any, id: Number) => {
       if (user.email === inputs.email && user.password === inputs.password) {
-        isValid=true
+        isValid = true;
+        dispatch(changeActualUser(id));
         history.push("/main");
-        return true
+        return true;
       }
     });
-    if(isValid===false){
-      alert("Podałeś niepoprawne dane")
+    if (isValid === false) {
+      alert("Podałeś niepoprawne dane");
     }
+  }
 
+  function validate(email: string, password: string, repeatPassword: string) {
+    if (!validEmail.test(inputs.email)) {
+      alert("Email nie jest poprawne!");
+    } else if (inputs.password !== inputs.repeatPassword) {
+      alert("Hasła nie są takie same!");
+    } else {
+      dispatch(changeActualUser(users.length));
+      history.push("/main");
+    }
   }
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
   };
+
+  const validEmail = new RegExp("^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$");
   return (
     <>
       <div className="login-container">
         <form onSubmit={handleSubmit}>
           {isHaveAccount === true ? (
             <>
-            <input className="email concave" name="email" value={inputs.email} onChange={handleChange} placeholder="Email *" type="text" />
+              <input className="email concave" name="email" value={inputs.email} onChange={handleChange} placeholder="Email *" type="text" />
 
-            <input
+              <input
                 className="password concave"
                 name="password"
                 value={inputs.password}
@@ -88,17 +101,16 @@ const Login = () => {
                 placeholder="Powtórz hasło *"
                 type="password"
               />
-              <Link to="/main">
-                <button
-                  type="submit"
-                  className="login-button"
-                  onClick={() => {
-                    dispatch(addUser(inputs));
-                  }}
-                >
-                  Zarejestruj się
-                </button>
-              </Link>
+              <button
+                type="submit"
+                className="login-button"
+                onClick={() => {
+                  validate(inputs.email, inputs.password, inputs.repeatPassword);
+                  dispatch(addUser(inputs));
+                }}
+              >
+                Zarejestruj się
+              </button>
               <p
                 onClick={() => {
                   setIsHaveAccount(true);

@@ -1,0 +1,59 @@
+import React from "react";
+import Star from "../icons/star.svg";
+import Marker from "../icons/marker.svg";
+import { changeActualRoom, setModalMode } from "../actions/actions";
+import { Link } from "react-router-dom";
+
+const displayStars = (number: Number) => {
+  let displayArray = [];
+  for (let i = 0; i < number; i++) {
+    displayArray.push(1);
+  }
+  return displayArray.map((item) => {
+    return <img src={Star} alt="" />;
+  });
+};
+const filteredRooms = (props: any) => {
+  return props.filteredRooms.map((room: any, id: any) => {
+    return (
+      <div className="room convex" key={id}>
+        <div className="room-top">
+          <img src={room.image} className="room-image" alt="room" />
+          <div className="room-right">
+            <div className="row">
+              <div className="left">
+                <h3>{room.name}</h3>
+                {displayStars(room.numberOfStars)}
+              </div>
+              <div className="right">
+                <h3>{room.price}zł</h3>
+              </div>
+            </div>
+
+            <div className="location">
+              <img src={Marker} alt="marker" />
+              <h4>{room.location}</h4>
+            </div>
+            <p>{room.description}</p>
+            <div className="room-button">
+              <button
+                className="edit-button"
+                onClick={() => {
+                  props.dispatch(setModalMode("edit"));
+                  props.openModal();
+                }}
+              >
+                Edytuj pokój
+              </button>
+              <Link to="/details" style={{ textDecoration: "none" }}>
+                <button onClick={() => props.dispatch(changeActualRoom(id))}>Zobacz ofertę</button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  });
+};
+
+export default filteredRooms;
