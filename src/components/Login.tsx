@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/login.scss";
-import { Link, useHistory } from "react-router-dom";
+import {  useHistory } from "react-router-dom";
 import { addUser, changeActualUser } from "../actions/actions";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 const Login = () => {
@@ -18,14 +18,14 @@ const Login = () => {
   };
   function checkUser(email: string, password: string) {
     let isValid = false;
-    users.map((user: any, id: Number) => {
-      if (user.email === inputs.email && user.password === inputs.password) {
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].email === inputs.email && users[i].password === inputs.password) {
         isValid = true;
-        dispatch(changeActualUser(id));
+        dispatch(changeActualUser(i));
         history.push("/main");
         return true;
       }
-    });
+    }
     if (isValid === false) {
       alert("Podałeś niepoprawne dane");
     }

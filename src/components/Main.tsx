@@ -4,8 +4,6 @@ import Plus from "../icons/plus.svg";
 import Minus from "../icons/minus.svg";
 import Star from "../icons/star.svg";
 import EmptyStar from "../icons/empty-star.svg";
-import Marker from "../icons/marker.svg";
-import User from "../icons/user.svg";
 import { addRoom ,setModalMode,editRoom} from "../actions/actions";
 import Cross from "../icons/cross.svg";
 import "../styles/modal.scss";
