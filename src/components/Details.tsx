@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import Bed from "../icons/bed.svg";
 import "../styles/details.scss";
 import Marker from "../icons/marker.svg";
-import User from "../icons/user.svg";
-import Star from "../icons/star.svg";import { useHistory } from "react-router-dom";
-// import Room from "../icons/room.png";
+import Star from "../icons/star.svg";
+import { useHistory } from "react-router-dom";
 import { RootStateOrAny, useSelector,useDispatch } from "react-redux";
 import { addReservation } from "../actions/actions";
 import DatePicker from "react-datepicker";
@@ -80,9 +79,7 @@ const Details = () => {
             <h4>{peopleNumber}</h4>
             <div
               className="convex minus"
-              onClick={() => {
-                setPeopleNumber(peopleNumber - 1);
-              }}
+              onClick={peopleNumber===0 ? ()=>setPeopleNumber(peopleNumber) :()=>setPeopleNumber(peopleNumber - 1)}
             >
               -
             </div>

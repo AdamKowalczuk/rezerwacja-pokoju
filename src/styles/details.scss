@@ -80,3 +80,29 @@ $gray: #5b6277;
     }
   }
 }
+
+@media only screen and (max-width: 1000px) {
+  .details-container {
+    flex-direction: column;
+    .details-image {
+      width: 100%;
+      height: auto;
+    }
+
+    .details {
+      padding: 10px;
+      .row {
+        display: flex;
+        align-items: center;
+        h2 {
+          margin-top: 0;
+          margin-bottom: 0px;
+        }
+        .stars {
+          margin-left: 10px;
+          display: flex;
+        }
+      }
+    }
+  }
+}

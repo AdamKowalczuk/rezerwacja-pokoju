@@ -420,39 +420,163 @@ const Main = () => {
         </div>
       ) : (
         <div className="main-container">
-          <input
-            className="searchbar convex"
-            name="destination"
-            value={inputs.destination}
-            onChange={handleChange}
-            placeholder="Cel podróży"
-            type="text"
-          />
-          <div className="options">=
 
-            <div className="number-of-peoples convex">
-              <div className="left">
-                <img src={User} alt="user" />
-                <h3>Liczba osób</h3>
+<div className="filters">
+            <input
+              className="searchbar convex"
+              name="destination"
+              value={inputs.destination}
+              onChange={handleChange}
+              placeholder="Cel podróży"
+              type="text"
+            />
+            <div className="convex">
+              <h3 style={{ textAlign: "center",paddingTop:"20px"}}>Zakres cen</h3>
+              <div className="price-container">
+                <div className="left">
+                  <p>min.(zł)</p>
+                  <input name="minimalPrice" value={inputs.minimalPrice} onChange={handleChange} className="convex" type="text" />
+
+                </div>
+                <div className="middle">
+                  <img src={Minus} alt="minus" />
+                </div>
+                <div className="right">
+                  <p>max.(zł)</p>
+                  <input name="maximumPrice" value={inputs.maximumPrice} onChange={handleChange} className="convex" type="text" />
+
+                </div>
               </div>
-              <div className="right">
-                <img src={Plus} className="convex" alt="plus" />
-                <h3>3</h3>
-                <img src={Minus} className="convex" alt="minus" />
+              <hr />
+              <div className="number-of-peoples">
+              <h3>Liczba osób</h3>
+
+                <div className="counter">
+                  <div className="convex plus" onClick={() => setNumberOfPeople(inputs.numberOfPeople + 1)}>
+                    <img src={Plus} alt="plus" />
+                  </div>
+                  <h4>{inputs.numberOfPeople}</h4>
+
+                  <div className="convex minus" onClick={() => setNumberOfPeople(inputs.numberOfPeople - 1)}>
+                    <img src={Minus} alt="minus" />
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <h3 style={{textAlign:'center'}}>Liczba gwiazdek</h3>
+              <div className="stars-row">
+                <button
+                  className="star-button star-button-selected"
+                  onClick={() => {
+                    setNumberOfStars(0);
+                    selectStarsNumber(0);
+                  }}
+                ></button>
+                <img src={EmptyStar} alt="star" />
+                <img src={EmptyStar} alt="star" />
+                <img src={EmptyStar} alt="star" />
+                <img src={EmptyStar} alt="star" />
+                <img src={EmptyStar} alt="star" />
+              </div>
+              <div className="stars-row">
+                <button
+                  className="star-button"
+                  onClick={() => {
+                    setNumberOfStars(1);
+                    selectStarsNumber(1);
+                  }}
+                ></button>
+                <img src={Star} alt="star" />
+                <img src={EmptyStar} alt="star" />
+                <img src={EmptyStar} alt="star" />
+                <img src={EmptyStar} alt="star" />
+                <img src={EmptyStar} alt="star" />
+              </div>
+              <div className="stars-row">
+                <button
+                  className="star-button"
+                  onClick={() => {
+                    setNumberOfStars(2);
+                    selectStarsNumber(2);
+                  }}
+                ></button>
+                <img src={Star} alt="star" />
+                <img src={Star} alt="star" />
+                <img src={EmptyStar} alt="star" />
+                <img src={EmptyStar} alt="star" />
+                <img src={EmptyStar} alt="star" />
+              </div>
+              <div className="stars-row">
+                <button
+                  className="star-button"
+                  onClick={() => {
+                    setNumberOfStars(3);
+                    selectStarsNumber(3);
+                  }}
+                ></button>
+                <img src={Star} alt="star" />
+                <img src={Star} alt="star" />
+                <img src={Star} alt="star" />
+                <img src={EmptyStar} alt="star" />
+                <img src={EmptyStar} alt="star" />
+              </div>
+              <div className="stars-row">
+                <button
+                  className="star-button"
+                  onClick={() => {
+                    setNumberOfStars(4);
+                    selectStarsNumber(4);
+                  }}
+                ></button>
+                <img src={Star} alt="star" />
+                <img src={Star} alt="star" />
+                <img src={Star} alt="star" />
+                <img src={Star} alt="star" />
+                <img src={EmptyStar} alt="star" />
+              </div>
+              <div className="stars-row">
+                <button
+                  className="star-button"
+                  onClick={() => {
+                    setNumberOfStars(5);
+                    selectStarsNumber(5);
+                  }}
+                ></button>
+                <img src={Star} alt="star" />
+                <img src={Star} alt="star" />
+                <img src={Star} alt="star" />
+                <img src={Star} alt="star" />
+                <img src={Star} alt="star" />
+              </div>
+              <div className="filter-buttons center">
+                <button
+                  className="reset-button"
+                  onClick={() => {
+                    reset();
+                  }}
+                >
+                  Wyczyść filtry
+                </button>
+                <button
+                  className="filter-button"
+                  onClick={() => {
+                    filter();
+                  }}
+                >
+                  Filtruj
+                </button>
               </div>
             </div>
-            <button id="search">Szukaj</button>
           </div>
-
           <div className="rooms">
-            {rooms.map((room: any) => {
+          <FilteredRooms  filteredRooms={filteredRooms} dispatch={dispatch} openModal={openModal} />
+            {/* {rooms.map((room: any) => {
               return (
                 <div className="room convex">
                   <div className="room-top">
                     <img src={room.image} className="room-image" alt="room" />
                     <div className="room-right">
                       <h3>{room.name}</h3>
-                      {/* {displayStars(room.numberOfStars)} */}
                       <div className="location">
                         <img src={Marker} alt="marker" />
                         <h4>{room.location}</h4>
@@ -466,7 +590,7 @@ const Main = () => {
                   </div>
                 </div>
               );
-            })}
+            })} */}
           </div>
         </div>
       )}
